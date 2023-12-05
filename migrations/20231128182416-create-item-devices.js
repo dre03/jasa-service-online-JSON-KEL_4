@@ -29,7 +29,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       photo_device: {
-        type: Sequelize.BLOB
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

@@ -25,7 +25,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       photo_technician: {
-        type: Sequelize.BLOB
+        type: Sequelize.STRING
       },
       status_technician: {
         type: Sequelize.STRING
