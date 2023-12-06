@@ -222,9 +222,15 @@ technicianController.delete = async (req, res) => {
                 id: id
             }
         })
-        return res.status(201).json({
-            message: "Data Berhasil Dihapus"
-        })
+        if (!deleteTechnician) {
+            return res.status(404).json({
+                message: "Data Tidak Ditemukan"
+            })
+        } else {
+            return res.status(201).json({
+                message: "Data Berhasil Dihapus"
+            })
+        }
     } catch (error) {
         return res.status(500).json({
             message: error
