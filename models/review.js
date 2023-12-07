@@ -13,26 +13,29 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Review.init({
-    id_user: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "Users",
-        key: "id"
-      }
+  Review.init(
+    {
+      id_user: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: "Users",
+          key: "id",
+        },
+      },
+      id_order: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: "Orders",
+          key: "id",
+        },
+      },
+      rating: DataTypes.INTEGER,
+      comment: DataTypes.STRING,
     },
-    id_service: {
-      type:  DataTypes.INTEGER,
-      references: {
-        model: "Services",
-        key: "id"
-      }
-    },
-    rating: DataTypes.INTEGER,
-    comment: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Review',
-  });
+    {
+      sequelize,
+      modelName: "Review",
+    }
+  );
   return Review;
 };

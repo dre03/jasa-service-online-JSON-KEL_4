@@ -13,28 +13,24 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Service.init({
-    id_technician: {
-      type: DataTypes.INTEGER,
-      references: {
+  Service.init(
+    {
+      id_technician: {
+        type: DataTypes.INTEGER,
+        references: {
           model: "Technicians",
           key: "id",
         },
+      },
+      name_service: DataTypes.STRING,
+      price_service: DataTypes.INTEGER,
+      description_service: DataTypes.STRING,
+      status_service: DataTypes.STRING,
     },
-    id_item_device: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: "Item_devices",
-        key: "id"
-      }
-    },
-    name_service: DataTypes.STRING,
-    price_service: DataTypes.INTEGER,
-    description_service: DataTypes.STRING,
-    status_service: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Service',
-  });
+    {
+      sequelize,
+      modelName: "Service",
+    }
+  );
   return Service;
 };

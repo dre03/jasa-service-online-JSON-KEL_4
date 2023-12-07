@@ -1,45 +1,45 @@
-'use strict';
+"use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Reviews', {
+    await queryInterface.createTable("Reviews", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       id_user: {
         type: Sequelize.INTEGER,
         references: {
           model: "Users",
-          key: "id"
-        }
+          key: "id",
+        },
       },
-      id_service: {
+      id_order: {
         type: Sequelize.INTEGER,
         references: {
-          model: "Services",
-          key: "id"
-        }
+          model: "Orders",
+          key: "id",
+        },
       },
       rating: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       comment: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
-      }
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Reviews');
-  }
+    await queryInterface.dropTable("Reviews");
+  },
 };

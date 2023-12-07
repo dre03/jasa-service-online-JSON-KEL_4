@@ -13,15 +13,24 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Payment.init({
-    id_order: DataTypes.INTEGER,
-    method_payment: DataTypes.STRING,
-    amount_payment: DataTypes.STRING,
-    date_payment: DataTypes.DATE,
-    payment_status: DataTypes.STRING
-  }, {
-    sequelize,
-    modelName: 'Payment',
-  });
+  Payment.init(
+    {
+      id_order: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: "Orders",
+          key: "id",
+        },
+      },
+      method_payment: DataTypes.STRING,
+      amount_payment: DataTypes.STRING,
+      date_payment: DataTypes.DATE,
+      payment_status: DataTypes.STRING,
+    },
+    {
+      sequelize,
+      modelName: "Payment",
+    }
+  );
   return Payment;
 };

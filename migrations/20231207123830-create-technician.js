@@ -22,7 +22,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       nik_technician: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       photo_technician: {
         type: Sequelize.STRING
