@@ -32,8 +32,9 @@ roleController.create = async (req, res) => {
       });
     }
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
-      message: error.message,
+      message: "Terjadi kesalahan pada server",
     });
   }
 };
@@ -48,7 +49,7 @@ roleController.getAll = async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({
-      message: error.message,
+      message: "Terjadi kesalahan pada server",
     });
   }
 };
@@ -72,7 +73,7 @@ roleController.gettById = async (req, res) => {
     }
   } catch (error) {
     return res.status(500).json({
-      message: error.message,
+      message: "Terjadi kesalahan pada server",
     });
   }
 };
@@ -92,7 +93,11 @@ roleController.update = async (req, res) => {
         role,
       },
     });
-
+    if (!getRole) {
+      return res.status(404).json({
+        message: "Data tidak ditemukan",
+      });
+    }
     if (!role) {
       return res.status(400).json({
         message: "Gagal memperbarui data. Mohon isi role",
@@ -101,11 +106,6 @@ roleController.update = async (req, res) => {
     if (cekRole) {
       return res.status(400).json({
         message: "Data sudah terdaftar",
-      });
-    }
-    if (!getRole) {
-      return res.status(404).json({
-        message: "Data tidak ditemukan",
       });
     }
 
@@ -120,11 +120,11 @@ roleController.update = async (req, res) => {
       }
     );
     return res.status(200).json({
-      message: "Data berhasil diubah",
+      message: "Data berhasil diperbarui",
     });
   } catch (error) {
     return res.status(500).json({
-      message: error.message,
+      message: "Terjadi kesalahan pada server",
     });
   }
 };
@@ -147,13 +147,13 @@ roleController.delete = async (req, res) => {
           id: id,
         },
       });
-      return res.status(404).json({
+      return res.status(201).json({
         message: "Data berhasil dihapus",
       });
     }
   } catch (error) {
     return res.status(500).json({
-      message: error,
+      message: "Terjadi kesalahan pada server",
     });
   }
 };
