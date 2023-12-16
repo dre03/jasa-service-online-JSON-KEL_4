@@ -36,7 +36,7 @@ technicianController.getById = async (req, res) => {
         })
         if (getTechnicalById === null) {
             return res.status(404).json({
-                message: "Data Tidak Ditemukan"
+                message: "Data tidak ditemukan"
             })
         }
         res.status(200).json({

@@ -16,9 +16,9 @@ const storge = multer.diskStorage({
 const upload = multer({storage: storge});
 
 routeItemDevice.post("/create", upload.single("photo_device"), itemDeviceController.create);
+routeItemDevice.get("/", itemDeviceController.getAll);
+routeItemDevice.get("/:id", itemDeviceController.getById);
 routeItemDevice.put("/update/:id", upload.single("photo_device"), itemDeviceController.update);
-routeItemDevice.get("/index", itemDeviceController.getAll);
-routeItemDevice.get("/index/:id", itemDeviceController.getById);
 routeItemDevice.delete("/delete/:id", itemDeviceController.delete);
 
 module.exports = routeItemDevice;

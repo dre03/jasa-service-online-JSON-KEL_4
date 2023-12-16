@@ -28,7 +28,7 @@ roleController.create = async (req, res) => {
         role: role,
       });
       return res.status(201).json({
-        message: "Data Berhasil ditambahkan",
+        message: "Data Berhasil dibuat",
       });
     }
   } catch (error) {
