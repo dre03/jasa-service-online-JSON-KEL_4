@@ -11,15 +11,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Order.belongsToMany(models.User, {through: "Review", foreignKey: "id_order"})
+      Order.belongsToMany(models.User, {through: "Review", foreignKey: "id_order"});
+      Order.belongsTo(models.User, {foreignKey: "id_user"})
+      Order.belongsTo(models.Service, {foreignKey: "id_service"})
     }
   }
   Order.init(
     {
-      id_items_device: {
+      id_user: {
         type: DataTypes.INTEGER,
         references: {
-          model: "Item_devices",
+          model: "Users",
           key: "id",
         },
       },
