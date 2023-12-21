@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Order.belongsToMany(models.User, {through: "Review", foreignKey: "id_order"})
     }
   }
   Order.init(
@@ -31,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       order_date: DataTypes.DATE,
       qty: DataTypes.INTEGER,
+      total_price: DataTypes.INTEGER
     },
     {
       sequelize,

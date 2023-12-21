@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Item_devices.belongsTo(models.User, {foreignKey: "id_user"})
+      Item_devices.belongsToMany(models.Service, {through: "Order", foreignKey: "id_items_device"})
     }
   }
   Item_devices.init(
