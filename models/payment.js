@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Payment.belongsTo(models.Order, { foreignKey: "id_order" });
+      Payment.hasOne(models.Payment_history, { foreignKey: "id_payment" });
     }
   }
   Payment.init(
@@ -22,10 +23,21 @@ module.exports = (sequelize, DataTypes) => {
           key: "id",
         },
       },
-      method_payment: DataTypes.STRING,
-      amount_payment: DataTypes.STRING,
-      date_payment: DataTypes.DATE,
-      payment_status: DataTypes.STRING,
+      kode_payment: DataTypes.STRING,
+      status_code: DataTypes.STRING,
+      status_message: DataTypes.STRING,
+      transaction_id: DataTypes.STRING,
+      signature_key: DataTypes.STRING,
+      merchant_id: DataTypes.STRING,
+      currency: DataTypes.STRING,
+      gross_amount: DataTypes.STRING,
+      payment_type: DataTypes.STRING,
+      va_number: DataTypes.STRING,
+      transaction_time: DataTypes.STRING,
+      transaction_status: DataTypes.STRING,
+      settlement_time: DataTypes.STRING,
+      fraud_status: DataTypes.STRING,
+      expiry_time: DataTypes.STRING,
     },
     {
       sequelize,

@@ -16,16 +16,49 @@ module.exports = {
           key: "id",
         },
       },
-      method_payment: {
+      kode_payment: {
+        type: Sequelize.STRING
+      },
+      status_code: {
         type: Sequelize.STRING,
       },
-      amount_payment: {
+      status_message: {
         type: Sequelize.STRING,
       },
-      date_payment: {
-        type: Sequelize.DATE,
+      transaction_id: {
+        type: Sequelize.STRING,
       },
-      payment_status: {
+      signature_key: {
+        type: Sequelize.STRING
+      },
+      merchant_id: {
+        type: Sequelize.STRING,
+      },
+      currency: {
+        type: Sequelize.STRING,
+      },
+      gross_amount: {
+        type: Sequelize.STRING,
+      },
+      payment_type: {
+        type: Sequelize.STRING,
+      },
+      va_number: {
+        type: Sequelize.STRING,
+      },
+      transaction_time: {
+        type: Sequelize.STRING,
+      },
+      transaction_status: {
+        type: Sequelize.STRING,
+      },
+      settlement_time: {
+        type: Sequelize.STRING,
+      },
+      fraud_status: {
+        type: Sequelize.STRING,
+      },
+      expiry_time: {
         type: Sequelize.STRING,
       },
       createdAt: {
