@@ -42,10 +42,11 @@ userController.login = async (req, res) => {
       telephone: findUser.telephone,
       address: findUser.address,
       photo: findUser.photo,
+      id_role: findUser.id_role
     };
     const token = jwt.sign(payloadToken, process.env.PRIVATE_KEY, {
       algorithm: "HS256",
-      expiresIn: "1h",
+      expiresIn: "5h",
     });
     return res.status(200).json({
       data: {
@@ -146,7 +147,7 @@ userController.getAll = async (req, res) => {
 userController.update = async (req, res) => {
   const { name, nik, gender, username, password, telephone, address } =
     req.body;
-  const { id } = req.params;
+  const id = req.params;
 
   try {
     const fields = [

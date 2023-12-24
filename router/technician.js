@@ -2,6 +2,7 @@ const express = require("express");
 const technicianController = require("../controller/technicianController");
 const routeTechician = express.Router();
 const multer = require("multer");
+// const authVerify = require("../midddleware/authVerify");
 
 
 const storage = multer.diskStorage({
@@ -16,7 +17,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 routeTechician.get("/", technicianController.getAll)
-routeTechician.get("/:id", technicianController.getById)
+routeTechician.get("/:id" ,technicianController.getById)
 routeTechician.post("/create", upload.single("photo_technician"), technicianController.create)
 routeTechician.put("/update/:id", upload.single("photo_technician"), technicianController.update)
 routeTechician.delete("/delete/:id", technicianController.delete)

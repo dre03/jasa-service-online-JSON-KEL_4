@@ -1,5 +1,5 @@
 const reviewController = {}
-const { User, Review, Order, Item_devices} = require("../models")
+const { User, Review, Order, } = require("../models")
 
 /*
     this is auto generate example, you can continue 
@@ -13,17 +13,19 @@ reviewController.index = async(req,res) => {
 
 reviewController.create = async (req, res) => {
     try {
-        const {nama, id_order,review} = req.body
+        const {id_order,rating, comment} = req.body
+        const id_user = req.id_user
 
-        const fields = ["nama", "id_order","review"];
+        const fields = ["id_order","rating", "comment"];
         const filterField = fields.filter((f) => !req.body[f]);
         if (filterField.length) {
+            console.log(filterField);
             return res.status(400).json({
                 message: `Mohon Lengkapi Data ${filterField.join(', ')}`
             })
         }
 
-        if (review.rating <= 0 || review.rating > 5) {
+        if (rating <= 0 || rating > 5) {
             return res.status(400).json({
                 message: `Rating Hanya 1 sampai 5`
             })
@@ -45,29 +47,29 @@ reviewController.create = async (req, res) => {
         } 
 
 
-        // Validasi Id Item Device 
-        const getItemDevices = await Item_devices.findOne({
-            where: {
-                id: getOrder.id_items_device
-            }
-        })
-        if (!getItemDevices) {
-            return res.status(404).json({
-                message: `Data ${getItemDevices.id} Tidak Ditemukan`
-            })
-        }
+        // // Validasi Id Item Device 
+        // const getItemDevices = await Item_devices.findOne({
+        //     where: {
+        //         id: getOrder.id_items_device
+        //     }
+        // })
+        // if (!getItemDevices) {
+        //     return res.status(404).json({
+        //         message: `Data ${getItemDevices.id} Tidak Ditemukan`
+        //     })
+        // }
 
-        // Validasi Id User
-        const getUser = await User.findOne({
+        // // Validasi Id User
+        const cekUser = await User.findOne({
             where: {
-                id: getItemDevices.id_user
+                id: id_user
             }
         })
-        if (getUser.name != nama) {
-            return res.status(404).json({
-                message: `Data ${nama} Tidak Sesuai dengan yang diOrder`
-            })
-        }
+        // if (getUser.name != nama) {
+        //     return res.status(404).json({
+        //         message: `Data ${nama} Tidak Sesuai dengan yang diOrder`
+        //     })
+        // }
 
         // Validasi Jika Orderan Sudah Direview
         const getReviewId = await Review.findAll({})
@@ -88,17 +90,18 @@ reviewController.create = async (req, res) => {
         }
         
         const createReview = await Review.create({
-            id_user: getUser.id,
+            id_user: id_user,
             id_order: getOrder.id,
-            rating: review.rating,
-            comment: review.comment
+            rating: rating,
+            comment: comment
         })
         return res.status(201).json({
-            message: "Data Berhasil Dibuat",
-            nama: nama,
-            id_order: getOrder.id,
-            review: review
-        })
+          message: "Data Berhasil Dibuat",
+          nama: cekUser.name,
+          id_order: getOrder.id,
+          rating: rating,
+          comment: comment,
+        });
 
     } catch (error) {
         console.log(error);

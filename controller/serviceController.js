@@ -7,12 +7,6 @@ const serviceController = {}
     this is auto generate example, you can continue 
 
 */
-serviceController.index = async (req, res) => {
-    res.json({
-        message: "Hello serviceController"
-    })
-}
-
 serviceController.getAll = async (req, res) => {
     try {
         const getService = await Service.findAll({
@@ -75,7 +69,7 @@ serviceController.create = async (req, res) => {
         const filterField = fields.filter((f) => !req.body[f]);
         if (filterField.length) {
             return res.status(400).json({
-                message: `Mohon Lengkapi Data ${filterField.join(', ')}`
+                message: `Mohon lengkapi ata ${filterField.join(', ')}`
             })
         }
         const fieldsHuruf = ["name_service", "description_service", "status_service"];
@@ -83,14 +77,14 @@ serviceController.create = async (req, res) => {
         for (const field of fieldsHuruf) {
             if (!validasiHuruf.test(req.body[field])) {
                 return res.status(400).json({
-                    message: `Data ${field} Harus Mengandung Huruf`
+                    message: `Data ${field} harus mengandung huruf`
                 })
             }
         }
         const validasiAngka = /^[0-9]+$/;
         if (!validasiAngka.test(price_service)) {
             return res.status(400).json({
-                message: "Data price_service Harus Mengandung Angka"
+                message: "Price service harus mengandung angka"
             })
         }
 
@@ -101,7 +95,7 @@ serviceController.create = async (req, res) => {
         })
         if (!getTechnical) {
             return res.status(404).json({
-                message: `Data Id ${id_technician} Tidak Ditemukan`
+                message: `Data Teknisi tidak ditemukan`
             })
         }
 

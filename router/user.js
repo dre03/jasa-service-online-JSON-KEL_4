@@ -2,6 +2,7 @@ const express = require("express");
 const userController = require("../controller/userController");
 const routedUser = express.Router();
 const multer = require("multer");
+const { checkRole } = require("../midddleware/authVerify");
 
 const storage = multer.diskStorage({
   destination: function (req, res, cb) {
@@ -16,7 +17,7 @@ const upload = multer({ storage: storage });
 
 routedUser.post("/login", userController.login);
 routedUser.post("/register", upload.single("photo"), userController.register);
-routedUser.get("/", userController.getAll);
-routedUser.put("/update/:id", upload.single("photo"), userController.update);
-routedUser.delete("/delete/:id", userController.delete);
+routedUser.get("/", (req, res, next) => checkRole(req, res, next, 2), userController.getAll);
+routedUser.put("/update/:id", (req, res, next) => checkRole(req, res, next, 1), upload.single("photo"), userController.update);
+routedUser.delete("/delete/:id", (req, res, next) => checkRole(req, res, next, 1), userController.delete);
 module.exports = routedUser;
