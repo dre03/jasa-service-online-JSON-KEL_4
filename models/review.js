@@ -1,6 +1,6 @@
 'use strict';
 const {
-  Model
+  Model, HasOne
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Review extends Model {
@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Review.belongsTo(models.Order, {foreignKey: "id_order"})
     }
   }
   Review.init(

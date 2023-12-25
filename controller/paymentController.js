@@ -21,11 +21,6 @@ paymentController.charge = async (req, res) => {
                 id: req.body.id_order
             }
         })
-        // if (!getOrder.id_user) {
-        //     return res.status(404).json({
-        //         message: "Data Tidak Ditemukan"
-        //     })
-        // }
         if (getOrder.id_user !== id_user) {
             return res.status(404).json({
                 message: `Anda Tidak Bisa Membuat Pembayaran Milik Orang Lain`
@@ -44,11 +39,6 @@ paymentController.charge = async (req, res) => {
         const pilihBank = req.body.bank_transfer.bank
         const vaProperty = pilihBank.toLowerCase() + '_va_number';
 
-        // const getOrder = await Order.findOne({
-        //     where: {
-        //         id: req.body.id_order
-        //     }
-        // })
         reqToMidtrans.transaction_details.gross_amount = getOrder.total_price
 
         const chargeResponse = await coreApi.charge(reqToMidtrans);

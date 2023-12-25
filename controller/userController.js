@@ -147,8 +147,7 @@ userController.getAll = async (req, res) => {
 userController.update = async (req, res) => {
   const { name, nik, gender, username, password, telephone, address } =
     req.body;
-  const id = req.params;
-
+  const id_user = req.id_user;
   try {
     const fields = [
       "name",
@@ -159,7 +158,7 @@ userController.update = async (req, res) => {
       "telephone",
       "address",
     ];
-    const cekUser = await User.findOne({ where: { id: id } });
+    const cekUser = await User.findOne({ where: { id: id_user } });
     const cekNik = await User.findOne({ where: { nik: nik } });
     const filterFields = fields.filter((f) => !req.body[f]);
     if (filterFields.length) {
@@ -209,7 +208,7 @@ userController.update = async (req, res) => {
       },
       {
         where: {
-          id: id,
+          id: id_user,
         },
       }
     );
@@ -217,6 +216,7 @@ userController.update = async (req, res) => {
       message: "Data berhasil diperbarui",
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       message: "Gagal memperbarui data, Terjadi kesalahan pada server",
     });
@@ -224,9 +224,9 @@ userController.update = async (req, res) => {
 };
 
 userController.delete = async (req, res) => {
-  const {id} = req.params;
+  const id_user = req.id_user;
   try {
-    const cekUser = await User.findOne({ where: { id: id } });
+    const cekUser = await User.findOne({ where: { id: id_user } });
     if (!cekUser) {
       return res.status(404).json({
         message: "Data tidak ditemukan"
@@ -234,7 +234,7 @@ userController.delete = async (req, res) => {
     } else {
       const deleteUser = await User.destroy({
        where: {
-        id: id
+        id: id_user
        }
       })
       return res.status(201).json({

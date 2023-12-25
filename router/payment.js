@@ -6,5 +6,4 @@ const routePayment = express.Router();
 routePayment.post("/", (req, res, next) => checkRole(req, res, next, 1), paymentController.charge)
 
 
-
 module.exports = routePayment
