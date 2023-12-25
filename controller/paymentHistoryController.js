@@ -12,19 +12,20 @@ paymentHistoryController.getAll = async (req, res) => {
         })
         if (cekUser.id_role == 1) {
             const getPaymentHistory = await Payment_history.findAll({
-              include: [
-                {
-                  model: Payment,
-                },
-              ],
-              where: {
-                id_user: id_user
-              }
+                include: [
+                    {
+                        model: Payment,
+                    },
+                ],
+                where: {
+                    id_user: id_user
+                }
             });
             return res.status(200).json({
-              data: getPaymentHistory,
+                data: getPaymentHistory,
             });
         }
+        console.log("Tes");
         const getPaymentHistory = await Payment_history.findAll({
             include: [
                 {

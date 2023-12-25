@@ -8,7 +8,10 @@ const routedReview = require("./review");
 const { authVerify, checkRole } = require("../midddleware/authVerify");
 const routePayment = require("./payment");
 const routePaymentHistory = require("./paymentHistory");
+const paymentController = require("../controller/paymentController");
 const route = express.Router();
+
+route.post("/payment/notifikasi", paymentController.notifikasi);
 
 route.use(
   "/role",
@@ -32,7 +35,7 @@ route.use(
 );
 route.use("/order", (req, res, next) => authVerify(req, res, next), routeOrder);
 route.use("/review", (req, res, next) => authVerify(req, res, next), routedReview);
-route.use("/payment", (req, res, next) => authVerify(req, res, next), routePayment)
+route.use("/payment", (req, res, next) => authVerify(req, res, next), routePayment);
 route.use("/payment-history", (req, res, next) => authVerify(req, res, next), routePaymentHistory);
 
 module.exports = route;

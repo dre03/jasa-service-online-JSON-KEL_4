@@ -15,6 +15,22 @@ let coreApi = new midtransClient.CoreApi({
 
 paymentController.charge = async (req, res) => {
     try {
+        const id_user = req.id_user
+        const getOrder = await Order.findOne({
+            where: {
+                id: req.body.id_order
+            }
+        })
+        // if (!getOrder.id_user) {
+        //     return res.status(404).json({
+        //         message: "Data Tidak Ditemukan"
+        //     })
+        // }
+        if (getOrder.id_user !== id_user) {
+            return res.status(404).json({
+                message: `Anda Tidak Bisa Membuat Pembayaran Milik Orang Lain`
+            })
+        }
         let reqToMidtrans = {}
 
         reqToMidtrans.payment_type = req.body.payment_type
@@ -28,13 +44,12 @@ paymentController.charge = async (req, res) => {
         const pilihBank = req.body.bank_transfer.bank
         const vaProperty = pilihBank.toLowerCase() + '_va_number';
 
-        const getOrder = await Order.findOne({
-            where: {
-                id: req.body.id_order
-            }
-        })
+        // const getOrder = await Order.findOne({
+        //     where: {
+        //         id: req.body.id_order
+        //     }
+        // })
         reqToMidtrans.transaction_details.gross_amount = getOrder.total_price
-        console.log(reqToMidtrans);
 
         const chargeResponse = await coreApi.charge(reqToMidtrans);
         let dataOrder = {
@@ -55,7 +70,7 @@ paymentController.charge = async (req, res) => {
         };
         const createdPayment = await Payment.create(dataOrder);
         return res.status(201).json({
-            message: "Berhasil Membuat Pesanan",
+            message: "Berhasil Membuat Pembayaran",
             data: createdPayment
         });
     } catch (error) {
@@ -85,8 +100,17 @@ paymentController.notifikasi = async (req, res) => {
             })
 
             const getUpdatePayment = await Payment.findOne({ where: { kode_payment: orderId } })
+            const getOrder = await Order.findOne({
+                attributes: {
+                    include: ["id"]
+                },
+                where: {
+                    id: getUpdatePayment.id_order
+                }
+            })
             const createPaymentHistory = await Payment_history.create({
-                id_payment: getUpdatePayment.id
+                id_payment: getUpdatePayment.id,
+                id_user: getOrder.id_user
             })
         }
         if (transactionStatus == "cancel" || transactionStatus == "expire") {
