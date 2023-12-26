@@ -10,10 +10,10 @@ orderController.getAll = async (req, res) => {
     const id_user = req.id_user;
     const cekRole = await User.findOne({
       where: {
-        id: id_user
-      }
-    })
-    if (cekRole.id_role === 1 ) {
+        id: id_user,
+      },
+    });
+    if (cekRole.id_role === 1) {
       const getOrder = await Order.findAll({
         include: [
           {
@@ -34,7 +34,7 @@ orderController.getAll = async (req, res) => {
           {
             model: Service,
           },
-        ]
+        ],
       });
       return res.status(200).json({
         data: getOrder,
@@ -53,19 +53,17 @@ orderController.getById = async (req, res) => {
   try {
     const id_role = req.id_role;
     const id_user = req.id_user;
-    const is_admin = req.id_role == 2 ? true : false
+    const is_admin = req.id_role == 2 ? true : false;
     const getByIdOrder = await Order.findOne({
       where: {
         id: id,
       },
     });
-
     if (!getByIdOrder) {
       return res.status(404).json({
         message: "Data tidak ditemukan",
       });
     }
-
     if (id_role != 2) {
       const cekUser = await User.findOne({
         where: {
@@ -77,8 +75,7 @@ orderController.getById = async (req, res) => {
     const cekUser = await User.findOne({
       where: {
         id: getByIdOrder.id_user,
-        id_role: id_role
-
+        id_role: id_role,
       },
     });
 
@@ -87,11 +84,10 @@ orderController.getById = async (req, res) => {
         message: "Data tidak ditemukan",
       });
     } else {
-       return res.status(200).json({
-         data: getByIdOrder,
-       });
+      return res.status(200).json({
+        data: getByIdOrder,
+      });
     }
-
   } catch (error) {
     console.log(error);
     return res.status(500).json({
