@@ -1,14 +1,10 @@
 const reviewController = {};
 const { User, Review, Order } = require("../models");
 
-/*
-    this is auto generate example, you can continue 
-
-*/
 reviewController.create = async (req, res) => {
   try {
     const { id_order, review } = req.body;
-    const id_user = req.id_user 
+    const id_user = req.id_user;
 
     const cekOrder = await Order.findOne({
       attributes: {
@@ -18,6 +14,12 @@ reviewController.create = async (req, res) => {
         id: id_order,
       },
     });
+
+    if (!cekOrder) {
+      return res.status(404).json({
+        message: `Data Id ${id_order} Tidak Ditemukan`,
+      });
+    }
 
     if (cekOrder.id_user !== id_user) {
       return res.status(404).json({
@@ -51,21 +53,6 @@ reviewController.create = async (req, res) => {
     if (review.rating <= 0 || review.rating > 5) {
       return res.status(400).json({
         message: `Rating Hanya 1 sampai 5`,
-      });
-    }
-
-    // Validasi Id Order
-    const getOrder = await Order.findOne({
-      attributes: {
-        include: ["id"],
-      },
-      where: {
-        id: id_order,
-      },
-    });
-    if (!getOrder) {
-      return res.status(404).json({
-        message: `Data Id ${id_order} Tidak Ditemukan`,
       });
     }
 
@@ -160,7 +147,6 @@ reviewController.getAll = async (req, res) => {
       });
     }
   } catch (error) {
-    console.error(error);
     return res.status(500).json({
       message: error,
     });
@@ -170,7 +156,7 @@ reviewController.getAll = async (req, res) => {
 reviewController.getById = async (req, res) => {
   try {
     const id = req.params.id;
-    const getReviewById = await User.findOne({
+    const getReviewById = await Review.findOne({
       include: [
         {
           model: Order,
@@ -194,7 +180,7 @@ reviewController.getById = async (req, res) => {
         id: id,
       },
     });
-    if (getReviewById === null) {
+    if (!getReviewById) {
       return res.status(404).json({
         message: "Data tidak ditemukan",
       });

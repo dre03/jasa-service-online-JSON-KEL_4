@@ -3,10 +3,6 @@ const fs = require('fs');
 
 const technicianController = {}
 
-/*
-    this is auto generate example, you can continue 
-
-*/
 technicianController.index = async (req, res) => {
     res.json({
         message: "Hello technicianController"

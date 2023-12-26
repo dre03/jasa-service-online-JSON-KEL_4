@@ -110,7 +110,6 @@ serviceController.create = async (req, res) => {
             message: "Data Berhasil Dibuat"
         })
     } catch (error) {
-        console.log(error);
         return res.status(500).json({
             message: error
         })

@@ -64,7 +64,6 @@ paymentController.charge = async (req, res) => {
             data: createdPayment
         });
     } catch (error) {
-        console.log(error);
         return res.json({
             message: "Gagal:" + error.message
         });

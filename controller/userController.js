@@ -6,10 +6,7 @@ const fs = require("fs");
 const userController = {};
 
 dotenv.config();
-/*
-    this is auto generate example, you can continue 
 
-*/
 userController.login = async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -158,7 +155,6 @@ userController.update = async (req, res) => {
       "address",
     ];
     const cekUser = await User.findOne({ where: { id: id_user } });
-    // const cekNik = await User.findOne({ where: { nik: nik } });
     const filterFields = fields.filter((f) => !req.body[f]);
     if (filterFields.length) {
       fs.unlinkSync(req.file.path);
@@ -172,11 +168,6 @@ userController.update = async (req, res) => {
         message: "Data tidak ditemukan",
       });
     }
-    // if (cekNik) {
-    //   return res.status(400).json({
-    //     message: "NIK sudah terdaftar",
-    //   });
-    // }
     const typeFile = ["image/jpeg", "image/png"];
     if (!req.file) {
       return res.status(400).json({

@@ -1,10 +1,6 @@
 const { Order, Service, User } = require("../models");
 const orderController = {};
 
-/*
-    this is auto generate example, you can continue 
-
-*/
 orderController.getAll = async (req, res) => {
   try {
     const id_user = req.id_user;
