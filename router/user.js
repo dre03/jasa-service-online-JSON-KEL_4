@@ -20,4 +20,5 @@ routedUser.post("/register", upload.single("photo"), userController.register);
 routedUser.get("/", (req, res, next) => checkRole(req, res, next, 2), userController.getAll);
 routedUser.put("/update/", (req, res, next) => checkRole(req, res, next, 1), upload.single("photo"), userController.update);
 routedUser.delete("/delete", (req, res, next) => checkRole(req, res, next, 1), userController.delete);
+routedUser.post("/logout", userController.logout)
 module.exports = routedUser;

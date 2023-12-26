@@ -42,7 +42,7 @@ userController.login = async (req, res) => {
       telephone: findUser.telephone,
       address: findUser.address,
       photo: findUser.photo,
-      id_role: findUser.id_role
+      id_role: findUser.id_role,
     };
     const token = jwt.sign(payloadToken, process.env.PRIVATE_KEY, {
       algorithm: "HS256",
@@ -67,7 +67,7 @@ userController.register = async (req, res) => {
   try {
     const { name, nik, gender, username, password, telephone, address } =
       req.body;
-    const cekNik = await User.findOne({where: {nik: nik}});
+    const cekNik = await User.findOne({ where: { nik: nik } });
 
     if (cekNik) {
       return res.status(400).json({
@@ -229,23 +229,55 @@ userController.delete = async (req, res) => {
     const cekUser = await User.findOne({ where: { id: id_user } });
     if (!cekUser) {
       return res.status(404).json({
-        message: "Data tidak ditemukan"
-      })
+        message: "Data tidak ditemukan",
+      });
     } else {
       const deleteUser = await User.destroy({
-       where: {
-        id: id_user
-       }
-      })
+        where: {
+          id: id_user,
+        },
+      });
       return res.status(201).json({
-        message: "User berhasil dihapus"
-      })
+        message: "User berhasil dihapus",
+      });
     }
   } catch (error) {
     return res.status(500).json({
-      message: "Terjadi kesalahan pada server"
+      message: "Terjadi kesalahan pada server",
     });
   }
-}
+};
+
+userController.logout = async (req, res) => {
+  try {
+    const id_user = req.id_user;
+    const findUser = await User.findOne({
+      where: {id: id_user },
+    });
+    const payloadToken = {
+      id: findUser.id,
+      name: findUser.name,
+      nik: findUser.nik,
+      gender: findUser.gender,
+      username: findUser.username,
+      telephone: findUser.telephone,
+      address: findUser.address,
+      photo: findUser.photo,
+      id_role: findUser.id_role,
+    };
+    const token = jwt.sign(payloadToken, process.env.PRIVATE_KEY, {
+      algorithm: "HS256",
+      expiresIn: 1,
+    });
+    return res.status(200).json({
+      message: "Logout berhasil",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      message: "Terjadi kesalahan pada server",
+    });
+  }
+};
 
 module.exports = userController;

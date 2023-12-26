@@ -60,6 +60,12 @@ orderController.getById = async (req, res) => {
       },
     });
 
+    if (!getByIdOrder) {
+      return res.status(404).json({
+        message: "Data tidak ditemukan",
+      });
+    }
+
     if (id_role != 2) {
       const cekUser = await User.findOne({
         where: {
