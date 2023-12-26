@@ -67,7 +67,7 @@ userController.register = async (req, res) => {
   try {
     const { name, nik, gender, username, password, telephone, address } =
       req.body;
-    const cekNik = await User.findOne({where: {nik: nik}});
+    const cekNik = await User.findOne({ where: { nik: nik } });
 
     if (cekNik) {
       return res.status(400).json({
@@ -151,7 +151,6 @@ userController.update = async (req, res) => {
   try {
     const fields = [
       "name",
-      "nik",
       "gender",
       "username",
       "password",
@@ -159,7 +158,7 @@ userController.update = async (req, res) => {
       "address",
     ];
     const cekUser = await User.findOne({ where: { id: id_user } });
-    const cekNik = await User.findOne({ where: { nik: nik } });
+    // const cekNik = await User.findOne({ where: { nik: nik } });
     const filterFields = fields.filter((f) => !req.body[f]);
     if (filterFields.length) {
       fs.unlinkSync(req.file.path);
@@ -173,11 +172,11 @@ userController.update = async (req, res) => {
         message: "Data tidak ditemukan",
       });
     }
-    if (cekNik) {
-      return res.status(400).json({
-        message: "NIK sudah terdaftar",
-      });
-    }
+    // if (cekNik) {
+    //   return res.status(400).json({
+    //     message: "NIK sudah terdaftar",
+    //   });
+    // }
     const typeFile = ["image/jpeg", "image/png"];
     if (!req.file) {
       return res.status(400).json({
@@ -197,7 +196,6 @@ userController.update = async (req, res) => {
     const updateUser = await User.update(
       {
         name: name,
-        nik: nik,
         gender: gender,
         username: username,
         password: hashPassword,
@@ -233,9 +231,9 @@ userController.delete = async (req, res) => {
       })
     } else {
       const deleteUser = await User.destroy({
-       where: {
-        id: id_user
-       }
+        where: {
+          id: id_user
+        }
       })
       return res.status(201).json({
         message: "User berhasil dihapus"

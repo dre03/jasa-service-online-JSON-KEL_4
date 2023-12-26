@@ -13,7 +13,7 @@ orderController.getAll = async (req, res) => {
         id: id_user
       }
     })
-    if (cekRole.id_role === 1 ) {
+    if (cekRole.id_role === 1) {
       const getOrder = await Order.findAll({
         include: [
           {
@@ -59,7 +59,11 @@ orderController.getById = async (req, res) => {
         id: id,
       },
     });
-
+    if (!getByIdOrder) {
+      return res.status(404).json({
+        message: "Data tidak ditemukan",
+      });
+    }
     if (id_role != 2) {
       const cekUser = await User.findOne({
         where: {
@@ -81,9 +85,9 @@ orderController.getById = async (req, res) => {
         message: "Data tidak ditemukan",
       });
     } else {
-       return res.status(200).json({
-         data: getByIdOrder,
-       });
+      return res.status(200).json({
+        data: getByIdOrder,
+      });
     }
 
   } catch (error) {

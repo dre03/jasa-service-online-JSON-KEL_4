@@ -143,7 +143,6 @@ technicianController.update = async (req, res) => {
             gender_technician,
             telephone,
             specialization,
-            nik_technician,
             status_technician } = req.body
         // Validasi photo technician
         const typeFile = ['image/jpeg', 'image/png'];
@@ -159,7 +158,7 @@ technicianController.update = async (req, res) => {
             })
         }
         // Validasi data yang belum dilengkapi
-        const fields = ['name_technician', 'gender_technician', 'telephone', 'specialization', 'nik_technician', 'status_technician'];
+        const fields = ['name_technician', 'gender_technician', 'telephone', 'specialization', 'status_technician'];
         const filterFields = fields.filter((f) => !req.body[f]);
         if (filterFields.length) {
             fs.unlinkSync(req.file.path);
@@ -179,7 +178,7 @@ technicianController.update = async (req, res) => {
             }
         }
         // Validasi data yang mengandung angka
-        const fieldsAngka = ['telephone', 'nik_technician'];
+        const fieldsAngka = ['telephone'];
         const validasiAngka = /^[0-9]+$/;
         for (const field of fieldsAngka) {
             if (!validasiAngka.test(req.body[field])) {
@@ -215,7 +214,6 @@ technicianController.update = async (req, res) => {
             gender_technician: gender_technician,
             telephone: telephone,
             specialization: specialization,
-            nik_technician: nik_technician,
             photo_technician: req.file.filename,
             status_technician: status_technician
         }, {
