@@ -43,7 +43,7 @@ userController.login = async (req, res) => {
     };
     const token = jwt.sign(payloadToken, process.env.PRIVATE_KEY, {
       algorithm: "HS256",
-      expiresIn: "5h",
+      expiresIn: "2h",
     });
     return res.status(200).json({
       data: {
@@ -202,7 +202,7 @@ userController.update = async (req, res) => {
       }
     );
     return res.status(201).json({
-      message: "Data berhasil diperbarui",
+      message: "Profile berhasil diupdate",
     });
   } catch (error) {
     console.log(error);

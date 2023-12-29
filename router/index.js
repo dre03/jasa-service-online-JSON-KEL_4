@@ -27,12 +27,7 @@ route.use(
   (req, res, next) => checkRole(req, res, next, 2),
   routeTechician
 );
-route.use(
-  "/service",
-  (req, res, next) => authVerify(req, res, next),
-  (req, res, next) => checkRole(req, res, next, 2),
-  routeService
-);
+route.use("/service",(req, res, next) => authVerify(req, res, next),routeService);
 route.use("/order", (req, res, next) => authVerify(req, res, next), routeOrder);
 route.use("/review", (req, res, next) => authVerify(req, res, next), routedReview);
 route.use("/payment", (req, res, next) => authVerify(req, res, next), routePayment);

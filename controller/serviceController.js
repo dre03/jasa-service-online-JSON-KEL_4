@@ -181,7 +181,7 @@ serviceController.update = async (req, res) => {
             }
         })
         return res.status(201).json({
-            message: "Data Berhasil Dibuat"
+            message: "Data Berhasil Diupdate"
         })
     } catch (error) {
         return res.status(500).json({

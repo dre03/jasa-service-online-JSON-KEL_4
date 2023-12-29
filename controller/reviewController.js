@@ -65,14 +65,14 @@ reviewController.create = async (req, res) => {
 
     const createReview = await Review.create({
       id_user: id_user,
-      id_order: getOrder.id,
+      id_order: cekOrder.id,
       rating: review.rating,
       comment: review.comment,
     });
     return res.status(201).json({
       message: "Data Berhasil Dibuat",
       nama: getUser.name,
-      id_order: getOrder.id,
+      id_order: cekOrder.id,
       review: review,
     });
   } catch (error) {
@@ -181,6 +181,7 @@ reviewController.getById = async (req, res) => {
       },
     });
     if (!getReviewById) {
+      console.log(getReviewById);
       return res.status(404).json({
         message: "Data tidak ditemukan",
       });
