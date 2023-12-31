@@ -9,7 +9,7 @@
     "generate-controller": "node ./scripts/generateController.js"
   },
   "keywords": [],
-  "author": "Muhammad Irhas Albais",
+  "author": "",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
